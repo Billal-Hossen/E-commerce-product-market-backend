@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const userRouter=require('./routers/userRouter');
 const categoryRouter= require('./routers/categoryRouter.js')
+const productRouter= require('./routers/productRouter')
 const error=require("./middlewares/error");
 
 
@@ -20,6 +21,7 @@ if(process.env.NODE_ENV==="development"){
 
 app.use('/api/user',userRouter);
 app.use('/api/category',categoryRouter);
+app.use('/api/product',productRouter);
 
 app.use(error)
 
