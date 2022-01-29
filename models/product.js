@@ -12,7 +12,7 @@ const productSchema= Schema({
 
     },
     photo:{
-        type: Buffer,
+        data: Buffer,
         contentType: String
     }
 })
@@ -20,7 +20,7 @@ const productSchema= Schema({
 
 const productValidate= product=>{
     const schema= Joi.object({
-        name: Joi.string().min(3).max(255),
+        name: Joi.string().min(3).max(255).required(),
         price:Joi.number().required(),
         description: Joi.string().max(2000).required(),
         quantity: Joi.number().required(),
