@@ -100,5 +100,57 @@ module.exports.updateProduct = async (req, res) => {
     })
 
 }
+const body={
+    order:"desc",
+    sortBy:"price",
+    limit:6,
+    skip:10,
+    filters:{
+        price:[1000,2000],
+        category:['13kxjccjj','3827948947dkjfjfjf']
+    }
 
+}
+
+module.exports.filterProducts= async (req,res)=>{
+    let order= req.body.order ==="desc"? 1: -1;
+    let sortBy= req.body.sortBy? req.body.sortBy: "_id";
+    let limit= req.body.limit? parseInt(req.body.limit): 10;
+    let skip= parseInt(req.body.skip);
+    let filters=req.body.filters;
+    let arg ={}
+
+    for (const key in filters) {
+        if(filters[key].length > 0){
+            if(key==="price"){
+                // {price:{$gte:0, $lte:100}}
+                arg['price']={
+                    $gte:filters['price'][0],
+                    $lte:filters['price'][1]
+                }
+                // console.log(arg);
+
+            }
+        
+            if(key==="category"){
+                    // ctegory: $in:['']
+                arg['category']={
+                    $in: filters["category"]
+                }
+                // console.log(arg);
+
+            }
+        }
+       
+    }
+ 
+    const products= await Product.find(arg)
+                        .select({photo:0})
+                        .populate("category","name")
+                        .sort({[sortBy]:order})
+                        .limit(limit)
+                        .skip(skip)
+
+     res.status(200).send(products)
+}
 
