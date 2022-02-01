@@ -1,4 +1,4 @@
-const { createProduct, getProduct, getProductById, updateProduct } = require('../controllers/productController');
+const { createProduct, getProducts, getProductById, updateProduct, getProductPhoto } = require('../controllers/productController');
 const admin = require('../middlewares/admin');
 const authorize = require('../middlewares/authorize');
 
@@ -11,11 +11,14 @@ const router= require('express').Router();
 
 router.route('/')
     .post([authorize,admin],createProduct)
-    .get(getProduct)
+    .get(getProducts)
 
 router.route('/:id')
     .get(getProductById)
-    .put(updateProduct)
+    .put([authorize,admin],updateProduct);
+
+router.route('/photo/:id')
+       .get(getProductPhoto)
 
 
     module.exports=router;

@@ -5,9 +5,9 @@ const productSchema= Schema({
     price: Number,
     description: String,
     quantity: Number,
-    cagegory:{
-        type : Schema.Types.ObjectId,
-        ref: "Category",
+    category:{
+        type : Schema.Types.ObjectId, //category id
+        ref: "Category", //category model name
         required: true
 
     },
