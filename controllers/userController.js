@@ -3,6 +3,7 @@ const _ =require('lodash');
 const bcrypt= require('bcrypt');
 
 module.exports.signUp= async (req,res)=>{
+    console.log("gedhhdhiu");
     const {error}=validate(req.body);
     if(error){
       return  res.status(400).send(error.details[0].message)
